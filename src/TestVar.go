@@ -22,7 +22,3 @@ func declare() {
 
 	// 多变量声明
 }
-
-func main() {
-	declare()
-}
