@@ -26,4 +26,15 @@ func main() {
 	r = p
 
 	r.ReadBook()
+
+	var w Writer
+	// 断言成功：因为w r 具体type是一致的
+	w = r.(Writer)
+
+	w.WriteBook()
+
+	_, ok := r.(Writer)
+	if ok {
+		println("assertion success")
+	}
 }
