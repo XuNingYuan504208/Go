@@ -61,6 +61,8 @@ func CloseChannelDemo() {
 		println("channel closing ...")
 
 		// close关闭一个channel
+		// 如果不关闭，则main会一直等待关闭，会打印出channel全部数据，但是由于goroutine没有继续写所以main会阻塞住
+		// 报错：all goroutines are asleep - deadlock 死锁
 		close(ch)
 	}()
 
@@ -73,7 +75,45 @@ func CloseChannelDemo() {
 			break
 		}
 	}
+	// 上面for可以改成
+	// range 会阻塞住，一直拿channel的数据
+	for data := range ch {
+		println(data)
+	}
 	println("main ending ...")
 	time.Sleep(1 * time.Second)
 	println("main end ")
+}
+
+func SelectChannelDemo() {
+	fi := make(chan int)
+	quit := make(chan int)
+
+	go func() {
+		for i := 0; i < 10; i++ {
+			println(<-fi)
+		}
+		// 向quit 写一个0
+		quit <- 0
+	}()
+
+	selectDemo(fi, quit)
+}
+
+func selectDemo(fi, quit chan int) {
+	x := 0
+	for {
+		select {
+		case fi <- x:
+			{
+				println("write x + 5")
+				x += 5
+			}
+		case <-quit:
+			println("case quit ")
+			return
+		default:
+
+		}
+	}
 }

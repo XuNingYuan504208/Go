@@ -1,7 +1,8 @@
 package main
 
-import Goroutien "TutorialProject/src/GoStudy/Goroutine"
+import Goroutine "TutorialProject/src/GoStudy/Goroutine"
 
 func main() {
-	Goroutien.CloseChannelDemo()
+	//Goroutien.CloseChannelDemo()
+	Goroutine.SelectChannelDemo()
 }
