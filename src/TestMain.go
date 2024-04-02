@@ -1,5 +1,10 @@
 package main
 
+import (
+	"runtime"
+	"time"
+)
+
 func main() {
 	//declare()
 	//fmt.Println("BEIJING:", BEIJING, "SHANGHAI:", SHANGHAI, "SHENZHEN:", SHENZHEN)
@@ -32,11 +37,36 @@ func main() {
 	//swap(&a, &b)
 	//println("a:", a, "b:", b)
 
-	println("11111")
-	println("22222")
-	println("33333")
-	defer println("end ...")
-	println("33333")
+	//println("11111")
+	//println("22222")
+	//println("33333")
+	//defer println("end ...")
+	//println("33333")
+
+	println("main routine start ...")
+
+	// 创建新的 goroutine，使用匿名函数
+	go func() {
+		defer println("anonymous function A defer end ...")
+		//return
+
+		// 第二个goroutine
+		go func() {
+			defer println("anonymous function B defer end ...")
+			// 只是退出当前子函数
+			//return
+			// 退出当前goroutine，结果：打印B defer 和A defer
+			runtime.Goexit()
+			println("goroutine anonymous func B start ... ")
+		}()
+		println("goroutine anonymous func A start ... ")
+	}()
+
+	// 死循环
+	for {
+		//
+		time.Sleep(1 * time.Second)
+	}
 }
 
 /*
