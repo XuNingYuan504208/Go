@@ -1,9 +1,6 @@
 package main
 
-import (
-	"runtime"
-	"time"
-)
+import "time"
 
 func main() {
 	//declare()
@@ -43,7 +40,7 @@ func main() {
 	//defer println("end ...")
 	//println("33333")
 
-	println("main routine start ...")
+	/*println("main routine start ...")
 
 	// 创建新的 goroutine，使用匿名函数
 	go func() {
@@ -65,6 +62,28 @@ func main() {
 	// 死循环
 	for {
 		//
+		time.Sleep(1 * time.Second)
+	}*/
+
+	ch := make(chan int, 3)
+
+	go func() {
+		defer println("goroutine defer end")
+
+		for i := 0; i < 4; i++ {
+			ch <- i + 5
+			println("goroutine running : len(c) : ", len(ch))
+		}
+	}()
+
+	time.Sleep(2 * time.Second)
+	for i := 0; i < 3; i++ {
+		chVal := <-ch
+		println("main :: i : ", i, "; chVal : ", chVal)
+	}
+	println("main end")
+
+	for {
 		time.Sleep(1 * time.Second)
 	}
 }
