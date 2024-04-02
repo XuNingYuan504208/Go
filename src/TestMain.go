@@ -1,8 +1,6 @@
 package main
 
-import "time"
-
-func main() {
+func mainTest() {
 	//declare()
 	//fmt.Println("BEIJING:", BEIJING, "SHANGHAI:", SHANGHAI, "SHENZHEN:", SHENZHEN)
 	//c := foo1("aa", 5)
@@ -65,7 +63,7 @@ func main() {
 		time.Sleep(1 * time.Second)
 	}*/
 
-	ch := make(chan int, 3)
+	/*ch := make(chan int, 3)
 
 	go func() {
 		defer println("goroutine defer end")
@@ -85,7 +83,8 @@ func main() {
 
 	for {
 		time.Sleep(1 * time.Second)
-	}
+	}*/
+
 }
 
 /*

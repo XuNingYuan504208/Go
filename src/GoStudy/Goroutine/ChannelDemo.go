@@ -2,7 +2,7 @@ package Goroutine
 
 import "time"
 
-func main() {
+func ChannelWithCapacityDemo() {
 	ch := make(chan int, 3)
 
 	go func() {
@@ -38,4 +38,42 @@ func main() {
 	for {
 		time.Sleep(1 * time.Second)
 	}
+}
+
+/*
+channel value :  5
+channel value :  6
+channel value :  7
+channel value :  8
+channel value :  9
+channel closing ...
+main ending ...
+main end
+*/
+func CloseChannelDemo() {
+	ch := make(chan int)
+
+	go func() {
+		for i := 0; i < 5; i++ {
+			ch <- i + 5
+		}
+		time.Sleep(1 * time.Second)
+		println("channel closing ...")
+
+		// close关闭一个channel
+		close(ch)
+	}()
+
+	for {
+		// ok 如果为true：channel没有关闭；如果false：channel已经关闭
+		// 先执行前面表达式，最后if判断的依据是ok
+		if value, ok := <-ch; ok {
+			println("channel value : ", value)
+		} else {
+			break
+		}
+	}
+	println("main ending ...")
+	time.Sleep(1 * time.Second)
+	println("main end ")
 }
